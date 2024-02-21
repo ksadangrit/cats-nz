@@ -14,7 +14,8 @@ Click here to view the [license](https://creativecommons.org/publicdomain/zero/1
 1. Importing and preparing data
 2. Cleaning the data
 3. Calculation and analysis 
-4. Findings and recommendations
+4. Visualisations and findings
+5. Recommendations
 
 ## 1. Importing and preparing data
 Firstly, we will download the datasets from [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) and save them into my computer file. 
@@ -173,7 +174,7 @@ cats_reference_clean <- cats_reference %>%
 
 ## 3. Calculation and analysis
 At this stage, we're going to do calculations on the `cats_nz_clean` dataframe before looking at the `cats_reference_clean` dataframe. For this part, I will mainly talk about the code that will be use for different calculations. The results and insights from these calculations will be discussed at the next stage.
-#### Total number of events 
+### Total number of events 
 -- From all cats --
 ```
 nrow(cats_nz_clean)
@@ -189,7 +190,7 @@ total_events_cat <- cats_nz_clean %>%
   rename("total_number" = "n") # Replace the column named n with total_number
 ```
 
-#### Average and total number of events
+### Average and total number of events
 We will calculate both the average and total number of events that occurred using different time measurements including hour of the day, weekdays, month and year. A data frame for each result will be created to make it easier when making visualisations later. Pipes will be used to chain operations such as `group_by()` and `summarise()`. 
 
 -- For each hour of the day --
@@ -283,8 +284,64 @@ print(max_deployed_hours)
 
 ```
 
-Now we will compare the number of events occured for each cat with other aspects. To do that we will join the `total_evnet_cats` dataframe with the `cats_reference_clean` dataframe using the below code.
+We will join the `total_evnet_cats` dataframe with the `cats_reference_clean` dataframe using the below code. The `cats_joined` dataframe will be used for comparison between the number of event with other aspects.
 ```
 cats_joined <- cats_reference_clean %>% 
   full_join(y = total_events_cat, by=c("animal_id"))
 ```
+
+### Find the average number of events separated by sex
+```
+avg_day <- cats_joined %>% 
+  filter(!is.na(deploy_days)) %>%  
+  group_by(animal_sex) %>% 
+  summarise(
+    total_number_sum = sum(total_number),
+    deploy_days_total = as.numeric(sum(deploy_days)),
+    avg_per_deploy_day = round(total_number_sum / deploy_days_total, 2)  # Round to 2 decimal places
+  )
+```
+
+## 4. Visualisations and findings 
+For this part of the project, I will not include all the codes used for creating visualisations but the full codes can be accessed in the **cats_nz_complete.R** file under the same repository.
+### Top 10 cats with the highest number of events
+![top10most_cats](https://github.com/ksadangrit/cats_nz/assets/156267785/8717139a-df6c-4fe9-a72d-0c5c7ac1cb80)
+
+### Top 10 cats with the lowest number of events
+![top10least_cats](https://github.com/ksadangrit/cats_nz/assets/156267785/5286486c-a6d8-40c5-a87d-cde2afbe7b27)
+
+### Average number of events per cat for each hour
+![avg_hour](https://github.com/ksadangrit/cats_nz/assets/156267785/58a24469-8d8a-495e-9756-36d091219e02)
+
+### Average number of events for each day of the week
+![avg_day_of_week](https://github.com/ksadangrit/cats_nz/assets/156267785/7f89fa7c-57a1-4466-9dbe-56b5f04d1b4b)
+
+### Average number of events for each month
+![avg_month](https://github.com/ksadangrit/cats_nz/assets/156267785/229c1b27-fe12-4a7d-8707-07bf0f2d0cb7)
+
+### Average number of events per cat for each year
+![avg_year](https://github.com/ksadangrit/cats_nz/assets/156267785/0b015443-ffc5-4f28-97ca-9e64e9fb39d7)
+
+### Average number of events in a day separated by sex
+![sex_day](https://github.com/ksadangrit/cats_nz/assets/156267785/b24635ae-cdf6-47a9-9331-15a93b34983f)
+
+### Total number of events vs deployed hours
+![total_deployed_hours](https://github.com/ksadangrit/cats_nz/assets/156267785/30b36182-c72f-440a-9881-b6fd0ab40242)
+
+### Total number of events vs Age
+![total_age](https://github.com/ksadangrit/cats_nz/assets/156267785/f42ed028-077f-45be-be63-7a2b4a1d41f6)
+
+### Total number of events vs Indoor hours
+![total_indoor](https://github.com/ksadangrit/cats_nz/assets/156267785/74ca9e37-9bcb-4e22-a1a4-f07313290775)
+
+### Total number of events vs Preys per month
+![total_prey](https://github.com/ksadangrit/cats_nz/assets/156267785/1e7afcdd-8fbb-40de-b0ba-726347e20ca8)
+
+### A graph based on longitude and latitude data
+![Lat_long](https://github.com/ksadangrit/cats_nz/assets/156267785/b0020a0d-756e-4b7b-8505-32b1b1e5404a)
+
+
+
+
+
+
