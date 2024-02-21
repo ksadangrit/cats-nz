@@ -152,12 +152,6 @@ hour_final <- cats_nz_clean %>%
             total = sum(total_number),
             num_cat = n_distinct(animal_id))
 
-# Total number of events that occurred per day_of_week
-total_events_day <- cats_nz_clean %>% 
-  group_by(day_of_week) %>% 
-  count(day_of_week) %>% 
-  rename("total_number" = "n")
-
 # Average number of events per cat for each day of the week
 day_final <- cats_nz_clean %>%
   group_by(day_of_week, animal_id) %>%
