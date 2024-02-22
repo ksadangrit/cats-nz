@@ -173,7 +173,7 @@ cats_reference_clean <- cats_reference %>%
 ```
 
 ## 3. Calculation and analysis
-At this stage, we're going to do calculations on the `cats_nz_clean` dataframe before looking at the `cats_reference_clean` dataframe. For this part, I will mainly talk about the code that will be use for different calculations. The results and insights from these calculations will be discussed at the next stage.
+At this stage, we're going to do calculations on the `cats_nz_clean` dataframe before looking at the `cats_reference_clean` dataframe. For this part, I will mainly talk about the code that will be use for different calculations. The results and insights from these calculations will be discussed at the next stage, except for the calculation of avg, min and max of ages, indoor hours, preys per month and deployed hours as I won't be making visualisations for those results.
 ### Total number of events 
 -- From all cats --
 ```
@@ -236,52 +236,58 @@ year_final <- cats_nz_clean %>%
             total = sum(total_number),
             num_cat = n_distinct(animal_id))
 ```
-
-Now we will perform calculations on the `cats_reference_clean` dataframe to find max, min and average of the `age_years`, `hrs_indoors`, `prey_p_month` and `deploy_hours`.
-
+### How many cats hunnt
+To find out how many cats hunt, we'll count the number of values in the `hunt` column from the `cats_reference_clean` using the below code.
 ```
-# Calculate the average age and round to 2 decimals and find max and min
-average_age <- round(mean(cats_reference_clean$age_years, na.rm = TRUE), 2)
-min_age <- min(cats_reference_clean$age_years, na.rm = TRUE)
-max_age <- max(cats_reference_clean$age_years, na.rm = TRUE)
+hunt_counts <- cats_reference_clean %>% 
+  count(hunt) 
+```
+### Calculating avg, min and max
+We will perform calculations on the `cats_reference_clean` dataframe to find max, min and average of the `age_years`, `hrs_indoors`, `prey_p_month` and `deploy_hours`. NA values will not be included in these calculations.
+
+Calculating the average, minimum, and maximum ages
+```
+summary_age <- cats_reference_clean %>%
+  summarise(
+    average_indoors = round(mean(age_years, na.rm = TRUE), 2),
+    min_indoors = min(age_years, na.rm = TRUE),
+    max_indoors = max(age_years, na.rm = TRUE)
+  )
+# Print the dataframe
+print(summary_age)
+```
+Calculating the average, minimum, and maximum indoors hours
+```
+summary_indoors <- cats_reference_clean %>%
+  summarise(
+    average_indoors = round(mean(hrs_indoors, na.rm = TRUE), 2),
+    min_indoors = min(hrs_indoors, na.rm = TRUE),
+    max_indoors = max(hrs_indoors, na.rm = TRUE)
+  )
 # Print the results
-print(paste("Average Age:", average_age))
-print(paste("Minimum Age:", min_age))
-print(paste("Maximum Age:", max_age))
+print(summary_indoors)
 ```
-
+Calculating the summary statistics for preys per month
 ```
-# Calculate the average indoors hours and round to 2 decimals and find max and min
-average_indoors <- round(mean(cats_reference_clean$hrs_indoors, na.rm = TRUE), 2)
-min_indoors <- min(cats_reference_clean$hrs_indoors, na.rm = TRUE)
-max_indoors <- max(cats_reference_clean$hrs_indoors, na.rm = TRUE)
+summary_prey <- cats_reference_clean %>%
+  summarise(
+    average_prey = round(mean(prey_p_month, na.rm = TRUE), 2),
+    min_prey = min(prey_p_month, na.rm = TRUE),
+    max_prey = max(prey_p_month, na.rm = TRUE)
+  )
 # Print the results
-print(average_indoors)
-print(min_indoors)
-print(max_indoors)
+print(summary_prey)
 ```
-
+Calculating the summary statistics for deployed hours
 ```
-# Calculate the average number of prey per month and round to 2 decimals and find max and min
-average_prey <- round(mean(cats_reference_clean$prey_p_month, na.rm = TRUE), 2)
-min_prey <- min(cats_reference_clean$prey_p_month, na.rm = TRUE)
-max_prey <- max(cats_reference_clean$prey_p_month, na.rm = TRUE)
+summary_deployed_hours <- cats_reference_clean %>%
+  summarise(
+    average_deployed_hours = round(mean(as.numeric(gsub(" hours", "", deploy_hours)), na.rm = TRUE), 2),
+    min_deployed_hours = min(as.numeric(gsub(" hours", "", deploy_hours)), na.rm = TRUE),
+    max_deployed_hours = max(as.numeric(gsub(" hours", "", deploy_hours)), na.rm = TRUE)
+  )
 # Print the results
-print(average_prey)
-print(min_prey)
-print(max_prey)
-```
-
-```
-# Calculate the average number of deployed hours and find max and min
-average_deployed_hours <- round(mean(as.numeric(gsub(" hours", "", cats_reference_clean$deploy_hours)), na.rm = TRUE), 0)
-min_deployed_hours <- min(as.numeric(gsub(" hours", "", cats_reference_clean$deploy_hours)), na.rm = TRUE)
-max_deployed_hours <- max(as.numeric(gsub(" hours", "", cats_reference_clean$deploy_hours)), na.rm = TRUE)
-# Print the results
-print(average_deployed_hours)
-print(min_deployed_hours)
-print(max_deployed_hours)
-
+print(summary_deployed_hours)
 ```
 
 We will join the `total_evnet_cats` dataframe with the `cats_reference_clean` dataframe using the below code. The `cats_joined` dataframe will be used for comparison between the number of event with other aspects.
@@ -290,7 +296,7 @@ cats_joined <- cats_reference_clean %>%
   full_join(y = total_events_cat, by=c("animal_id"))
 ```
 
-### Find the average number of events separated by sex
+### Finding the average number of events separated by sex
 ```
 avg_day <- cats_joined %>% 
   filter(!is.na(deploy_days)) %>%  
@@ -304,42 +310,55 @@ avg_day <- cats_joined %>%
 
 ## 4. Visualisations and findings 
 For this part of the project, I will not include all the codes used for creating visualisations but the full codes can be accessed in the **cats_nz_complete.R** file under the same repository.
+
 ### Top 10 cats with the highest number of events
-![top10most_cats](https://github.com/ksadangrit/cats_nz/assets/156267785/8717139a-df6c-4fe9-a72d-0c5c7ac1cb80)
+![top_10](https://github.com/ksadangrit/cats_nz/assets/156267785/33f7d8ef-0a04-4ffd-af68-c1e08f40c592)
 
 ### Top 10 cats with the lowest number of events
-![top10least_cats](https://github.com/ksadangrit/cats_nz/assets/156267785/5286486c-a6d8-40c5-a87d-cde2afbe7b27)
+![last_10](https://github.com/ksadangrit/cats_nz/assets/156267785/cc466ced-f8cc-4cfe-bab3-073d8f438ef3)
 
-### Average number of events per cat for each hour
-![avg_hour](https://github.com/ksadangrit/cats_nz/assets/156267785/58a24469-8d8a-495e-9756-36d091219e02)
+### Average number of events per cat 
 
-### Average number of events for each day of the week
-![avg_day_of_week](https://github.com/ksadangrit/cats_nz/assets/156267785/7f89fa7c-57a1-4466-9dbe-56b5f04d1b4b)
+---- **For each hour** ----
 
-### Average number of events for each month
-![avg_month](https://github.com/ksadangrit/cats_nz/assets/156267785/229c1b27-fe12-4a7d-8707-07bf0f2d0cb7)
+![avg_hour](https://github.com/ksadangrit/cats_nz/assets/156267785/1686cc66-b3f8-4e48-93c0-f38bca9f5b34)
 
-### Average number of events per cat for each year
-![avg_year](https://github.com/ksadangrit/cats_nz/assets/156267785/0b015443-ffc5-4f28-97ca-9e64e9fb39d7)
+---- **For each day of the week** ----
+
+![avg_weekday](https://github.com/ksadangrit/cats_nz/assets/156267785/f0f90862-f561-435a-bad5-a8c2c95cff94)
+
+---- **For each month** ----
+
+![avg_month](https://github.com/ksadangrit/cats_nz/assets/156267785/4fccafb1-0cea-4fbf-8391-13558cb51ab8)
+
+---- **For each year** ----
+
+![avg_year](https://github.com/ksadangrit/cats_nz/assets/156267785/7a7f4693-50af-48ec-b6c1-2244dcae15c8)
 
 ### Average number of events in a day separated by sex
-![sex_day](https://github.com/ksadangrit/cats_nz/assets/156267785/b24635ae-cdf6-47a9-9331-15a93b34983f)
+![avg_sex_day](https://github.com/ksadangrit/cats_nz/assets/156267785/78f97703-a36b-4c8a-8e80-45dde4b69778)
 
-### Total number of events vs deployed hours
-![total_deployed_hours](https://github.com/ksadangrit/cats_nz/assets/156267785/30b36182-c72f-440a-9881-b6fd0ab40242)
+### How many cats hunt?
+![hunt](https://github.com/ksadangrit/cats_nz/assets/156267785/01b288a8-384c-4f14-b784-76769202b923)
 
 ### Total number of events vs Age
-![total_age](https://github.com/ksadangrit/cats_nz/assets/156267785/f42ed028-077f-45be-be63-7a2b4a1d41f6)
+![total_age](https://github.com/ksadangrit/cats_nz/assets/156267785/ba14ec13-6d3f-4008-ae50-ba5d06ea56aa)
 
 ### Total number of events vs Indoor hours
-![total_indoor](https://github.com/ksadangrit/cats_nz/assets/156267785/74ca9e37-9bcb-4e22-a1a4-f07313290775)
+![total_indoor](https://github.com/ksadangrit/cats_nz/assets/156267785/29e8a19b-db96-4fa2-bb38-5bae6a5bb9d8)
 
 ### Total number of events vs Preys per month
-![total_prey](https://github.com/ksadangrit/cats_nz/assets/156267785/1e7afcdd-8fbb-40de-b0ba-726347e20ca8)
+![total_prey](https://github.com/ksadangrit/cats_nz/assets/156267785/9f39b097-1bc9-4b26-9b9e-44dc78d6da66)
+
+### Total number of events vs deployed hours
+![total_deply_hr](https://github.com/ksadangrit/cats_nz/assets/156267785/5443c8db-9eca-45de-8df1-c35f12178eef)
 
 ### A graph based on longitude and latitude data
-![Lat_long](https://github.com/ksadangrit/cats_nz/assets/156267785/b0020a0d-756e-4b7b-8505-32b1b1e5404a)
+![Lat_long](https://github.com/ksadangrit/cats_nz/assets/156267785/feb1acc8-a358-4621-9abf-1ba4acbdbd2e)
 
+
+
+## 5. Recommendations
 
 
 
