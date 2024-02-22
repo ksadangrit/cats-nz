@@ -1,6 +1,6 @@
 # Pet Cats in New Zealand
+![pexels-pixabay-257532](https://github.com/ksadangrit/cats_nz/assets/156267785/a60327d8-80dc-454c-9ab4-f9f146034219)
 
-![pexels-pixabay-257532](https://github.com/ksadangrit/cats_nz/assets/156267785/a33c478b-807e-4786-9de5-44a8d6934956)
 _Photo by Pixabay from [Pexels](https://www.pexels.com/photo/low-angle-view-of-cat-on-tree-257532/)_
 
 ## Introduction
@@ -15,7 +15,7 @@ Click here to view the [license](https://creativecommons.org/publicdomain/zero/1
 2. Cleaning the data
 3. Calculation and analysis 
 4. Visualisations and findings
-5. Recommendations
+5. Conclusions and recommendations
 
 ## 1. Importing and preparing data
 Firstly, we will download the datasets from [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) and save them into my computer file. 
@@ -309,56 +309,81 @@ avg_day <- cats_joined %>%
 ```
 
 ## 4. Visualisations and findings 
-For this part of the project, I will not include all the codes used for creating visualisations but the full codes can be accessed in the **cats_nz_complete.R** file under the same repository.
+For this part of the project, I will not include the codes used for creating visualisations but the full codes can be accessed in the **cats_nz_complete.R** file under the same repository.
 
 ### Top 10 cats with the highest number of events
 ![top_10](https://github.com/ksadangrit/cats_nz/assets/156267785/33f7d8ef-0a04-4ffd-af68-c1e08f40c592)
 
+Out of 233 cats in the experiment, **Luna** is the one with the most total number of events at **5151**, followed by **Whiskey, Skyll, Bella** and **Penny.** The difference between the number of events occured for Luna and Whiskey is 770 and between Whiskey and Skyll is 687. However, from rank 4 to 10, the difference in the number of events between the two cats ranked next to each other is never greater than 140.
+
 ### Top 10 cats with the lowest number of events
 ![last_10](https://github.com/ksadangrit/cats_nz/assets/156267785/cc466ced-f8cc-4cfe-bab3-073d8f438ef3)
 
+Boots is the cat with the least total events at 11, followed by Barnaby1, Oscar, Aggie and Greyskull2. The diffetence in the number of events between Boots and Barnaby1 is over 80. There is also a big difference in the number of events that Minerva took and Timmy1 took by 215. Boots and Barnaby1 are the only 2 cats that have less than 100 events.
+
 ### Average number of events per cat 
+In this part of the visualisations, we will only look at the average number of events that a cat take at different time measurements. This is because the participating cats were given the GPS device at different time period and the number of cats for each month varies. As a result, drawing conclusions based on the total number can potentially be inaccurate.
 
 ---- **For each hour** ----
 
 ![avg_hour](https://github.com/ksadangrit/cats_nz/assets/156267785/1686cc66-b3f8-4e48-93c0-f38bca9f5b34)
 
+4am is when the average number of events occured the least. The average number of events that cats take increases from 5am onwards and reached the highest number at 4pm with the average number of events being 84. The average number of events continues to drop after 6 pm.
+
 ---- **For each day of the week** ----
 
 ![avg_weekday](https://github.com/ksadangrit/cats_nz/assets/156267785/f0f90862-f561-435a-bad5-a8c2c95cff94)
+
+Sunday is the day with the highest average number of events, followed by Saturday and Monday. The average number of events continues to drop slightly throughout the weekdays and reaches the lowest on Thruday with 253 events occured. The number then gradually rises up from Friday onwards. It is worth noting that there is generally not much difference in the number of events cats take throughout the week as the difference between the highest number and the lowest is only 30.
 
 ---- **For each month** ----
 
 ![avg_month](https://github.com/ksadangrit/cats_nz/assets/156267785/4fccafb1-0cea-4fbf-8391-13558cb51ab8)
 
+March is the month with the highest average number of events at 1884 events. The number drops significantly after March and reaches its lowest in June with only 520 events occured on average. However, there is a significant change after June as the number rises up from June and reaches the second peak in August before dropping once again until November. 
+
 ---- **For each year** ----
 
 ![avg_year](https://github.com/ksadangrit/cats_nz/assets/156267785/7a7f4693-50af-48ec-b6c1-2244dcae15c8)
 
+2016 is the year with the highest average number of events, followed by 2015 and 2017. There is less than 60 events difference between the number of avergae events occured for cats in 2016 and 2015. However, the difference in the average number is quite significant between 2015 and the other two years as 2015 has at least 500 event less.
+
 ### Average number of events in a day separated by sex
-![avg_sex_day](https://github.com/ksadangrit/cats_nz/assets/156267785/78f97703-a36b-4c8a-8e80-45dde4b69778)
+![day_sex_nona](https://github.com/ksadangrit/cats_nz/assets/156267785/747f9d22-edab-4222-8bb6-05fcd747729f)
+
+In a day, events occured more often for male cats than female cats with the difference being around 30 events. 
 
 ### How many cats hunt?
 ![hunt](https://github.com/ksadangrit/cats_nz/assets/156267785/01b288a8-384c-4f14-b784-76769202b923)
 
+We can see from the graph that 67.4% of all the participating cats hunt and only around 13.7% do not hunt. The number of cats that hunt is almost 5 times more than the cats that do not hunt. The number of cats with unknown status or missing data as to whether they hunt or not contributes to almost 19% of all cats which is more than the number of cats that are confirmed for not hunting. 
+
 ### Total number of events vs Age
 ![total_age](https://github.com/ksadangrit/cats_nz/assets/156267785/ba14ec13-6d3f-4008-ae50-ba5d06ea56aa)
+
+When we compare the cat ages and the total number of events each cat took, there seems to be no obvious correlation between the two factors. Luna is the cat with the highest number of event while Boots is the one with the least number of events although both cats are of the same age. In the plot, the are cats with high number of events and low number of events for all age ranges.
 
 ### Total number of events vs Indoor hours
 ![total_indoor](https://github.com/ksadangrit/cats_nz/assets/156267785/29e8a19b-db96-4fa2-bb38-5bae6a5bb9d8)
 
+When we look at the number of events and the number of hours a cat stay indoors. There also seems to be no apparent correlation between the two factor. Although Boots, the cat with the lowest number of events has spend more time indoors than Luna, there are also other cats more time indoors than Boots and still have higher number of events.
+
 ### Total number of events vs Preys per month
 ![total_prey](https://github.com/ksadangrit/cats_nz/assets/156267785/9f39b097-1bc9-4b26-9b9e-44dc78d6da66)
+
+There is no clear correlation between the number of events a cat takes and the number of preys they catch as there are cats with low number of events who catch over 20 preys and vice versa.
 
 ### Total number of events vs deployed hours
 ![total_deply_hr](https://github.com/ksadangrit/cats_nz/assets/156267785/5443c8db-9eca-45de-8df1-c35f12178eef)
 
+There seems to be a correlation between the number of hours GPS deployed on cats and the number of events they take. As per the above plot, cat with more deployed hours tend to also have more number of events recorded. We can see that there are a few cats on the plot that outside of the lines. Theose outliers may be the exceptions to the major trend. However, it is evident that there is a strong correlation between the two factors.
+
 ### A graph based on longitude and latitude data
 ![Lat_long](https://github.com/ksadangrit/cats_nz/assets/156267785/feb1acc8-a358-4621-9abf-1ba4acbdbd2e)
 
+When plotting a graph using the longitude and latitude data, it appears that most events (99.7% of the time) occured in the same area while 1155(0.3% of all events) happened in a further location. There are definitely some errors with the location data of the 1155 events as all cats in this project are from New Zealand but the outliers suggested that those events occured in a different continent.
 
-
-## 5. Recommendations
+## 5. Conclusions and recommendations
 
 
 
