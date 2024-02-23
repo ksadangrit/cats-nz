@@ -6,9 +6,12 @@ _Photo by Pixabay from [Pexels](https://www.pexels.com/photo/low-angle-view-of-c
 ## Introduction
 In this project, we will be looking at datasets of pet cats in New Zealand which had been collected from GPS sensors strapped by a number of voluntees on their pets to track the cat's number of activities. The datasets are from 2015 to 2017. Cat's characteristics such as sex, age and hunting habits are also provided in the datasets.  This data is published by [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47). 
 
-I first came across this data through the [tidytuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-01-31/readme.md) post. As the datasets provided on the page is for the UK, I went to the original [website](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) to retrieve all the New Zealand datasets. The researchers originally collected data regarding pet cats from six different countries such as the UK, Australia and New Zealand to study the ecological importace of pets as predators. This project will focus solely on the New Zealand dataset. R will be utilised for data analysis and visualisation.
+I first came across this data through the [tidytuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-01-31/readme.md) post. As the datasets provided on the page is for the UK, I went to the original [website](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) to retrieve all the New Zealand datasets. The researchers originally collected data regarding pet cats from six different countries such as the UK, Australia and New Zealand to study the ecological importace of pets as predators. This project will focus solely on the New Zealand dataset. R will be utilised for data analysis and visualisation. 
 
-Click here to view the [license](https://creativecommons.org/publicdomain/zero/1.0/) of this data. These data are also described in the following [publication](https://doi.org/10.1111/acv.12563): Kays R, Dunn RR, Parsons AW, Mcdonald B, Perkins T, Powers S, Shell L, McDonald JL, Cole H, Kikillus H, Woods L, Tindle H, Roetman P (2020) The small home ranges and large local ecological impacts of pet cats. Animal Conservation.
+This project will focus only on the New Zealand cats data in which all the animals involved share the same taxon and does not contain any details of the preys that those cats hunt. The main objectives that I hope to find by the end of this project is whether there are any correlations between the number of events recorded for cats and other factors such as their ages, indoor hours, number of preys they catch and hours of GPS deployment. I also would like to explore if there are any trends in terms of the number of events and time measurements such as hour of the day, weekdays, months and year.
+
+_Note: Click here to view the [license](https://creativecommons.org/publicdomain/zero/1.0/) of this data. These data are also described in the following [publication](https://doi.org/10.1111/acv.12563): Kays R, Dunn RR, Parsons AW, Mcdonald B, Perkins T, Powers S, Shell L, McDonald JL, Cole H, Kikillus H, Woods L, Tindle H, Roetman P (2020) The small home ranges and large local ecological impacts of pet cats. Animal Conservation._
+
 
 ## My analytical workflow
 1. Importing and preparing data
@@ -256,6 +259,10 @@ summary_age <- cats_reference_clean %>%
 # Print the dataframe
 print(summary_age)
 ```
+![Screen Shot 2024-02-23 at 1 39 00 PM](https://github.com/ksadangrit/cats_nz/assets/156267785/e3156de0-9b0e-47bb-bcd8-da91d1195835)
+
+The oldest cat is 16 years old and the youngest one is under one year old. The oldest cat is more than 3 times older than most cats in this research.
+
 Calculating the average, minimum, and maximum indoors hours
 ```
 summary_indoors <- cats_reference_clean %>%
@@ -267,6 +274,10 @@ summary_indoors <- cats_reference_clean %>%
 # Print the results
 print(summary_indoors)
 ```
+![Screen Shot 2024-02-23 at 12 49 37 PM](https://github.com/ksadangrit/cats_nz/assets/156267785/7bcedb1f-dbce-4e2a-86fd-88174b19caeb)
+
+Some cat spends 23 hours indoors which over 11 times more than cat with the least indoor hours. In average cats in this research spends around 12 hours indoors.
+
 Calculating the summary statistics for preys per month
 ```
 summary_prey <- cats_reference_clean %>%
@@ -278,6 +289,10 @@ summary_prey <- cats_reference_clean %>%
 # Print the results
 print(summary_prey)
 ```
+![Screen Shot 2024-02-23 at 12 51 16 PM](https://github.com/ksadangrit/cats_nz/assets/156267785/b8a2e972-b083-41e0-9b76-41551f784994)
+
+Cats that hunt in this research catches at least 1 prey and in average they catch around 5 preys per month. The most preys that a cat catch per month is 21 preys which is about 4 times more than the average.
+
 Calculating the summary statistics for deployed hours
 ```
 summary_deployed_hours <- cats_reference_clean %>%
@@ -289,6 +304,9 @@ summary_deployed_hours <- cats_reference_clean %>%
 # Print the results
 print(summary_deployed_hours)
 ```
+![Screen Shot 2024-02-23 at 12 49 16 PM](https://github.com/ksadangrit/cats_nz/assets/156267785/e5f82ce3-942e-404d-81e9-db18831e3a0d)
+
+In avergae, GPS device had been deployed on cats for around 175 hours. The least time that a device is deployed on a cat is only 13 hours while some cat had a device with them for as long as 2004 hours. That is around 83 days and 11 more time than most cats.
 
 We will join the `total_evnet_cats` dataframe with the `cats_reference_clean` dataframe using the below code. The `cats_joined` dataframe will be used for comparison between the number of event with other aspects.
 ```
@@ -384,7 +402,24 @@ There seems to be a correlation between the number of hours GPS deployed on cats
 When plotting a graph using the longitude and latitude data, it appears that most events (99.7% of the time) occured in the same area while 1155(0.3% of all events) happened in a further location. There are definitely some errors with the location data of the 1155 events as all cats in this project are from New Zealand but the outliers suggested that those events occured in a different continent.
 
 ## 5. Conclusions and recommendations
+Based on the data that we have available from 2015 to 2017, we found the following:
+* Most cats hunt and they usually capture around 5 preys per month.
+* The cat ages range from under one year old to 16 years old.
+* Some cat has the GPS device on them for almost 83 days while some cat only has it with them for 13 hours.
+* Most cats spend around 12 hours indoors. Some cat in this reseach spend only 1 hour outdoors while some only spends 2 hours indoors.
+* There is correlation between the total number of events occured for each cat and their ages, indoor hours and number of preys they capture in a month.
+* Howeevr, it is evident that the more time cats have GPS device with them, the more events will be recorded on the device.
+* Luna has the highest number of events recorded and Boots has the least. Luna's number of events is over 468 times more than Boots.
+* Male cats have more events recorded than females.
+* More events had been recorded more during the afternoon (12pm to 6pm) and less at night (1am - 5am). This suggests that cats tend to go out and move around more in the afternoon.
+* There is not much difference in the number of events recorded for each day of the week but more events had been recorded on weekends.
+* In average, the least number of event occureed in June and the most in March. This is highly due to the fact that there was not as many cats in this reseach in June and more in March as the number of cats participated varied for different period.
+* More events were averagely recorded in 2016, followed by 2015 and 2017. 
 
+### Recommendations
+1. For the results to be unbiased and more accurate, the reseachers should consider assigning the GPS tracker to the same number of cats for each year. Cats should have the GPS on for the same duration and time period.
+2. It is unclear whether the event ids were craeted every time a movement is detected or when the cats go outside only. More clarification would provide better insights from the results.
+3. Most cats in this research had been desexed or with the unknown status. It might be benificial to compare between cats that are desexed and not to see if there is any correlation between the events they have and their sexual status.
 
 
 
