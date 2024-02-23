@@ -248,7 +248,7 @@ hunt_counts <- cats_reference_clean %>%
 ### Calculating avg, min and max
 We will perform calculations on the `cats_reference_clean` dataframe to find max, min and average of the `age_years`, `hrs_indoors`, `prey_p_month` and `deploy_hours`. NA values will not be included in these calculations.
 
-Calculating the average, minimum, and maximum ages
+-- ages --
 ```
 summary_age <- cats_reference_clean %>%
   summarise(
@@ -263,7 +263,7 @@ print(summary_age)
 
 The oldest cat is 16 years old and the youngest one is under one year old. The oldest cat is more than 3 times older than most cats in this research.
 
-Calculating the average, minimum, and maximum indoors hours
+-- indoors hours --
 ```
 summary_indoors <- cats_reference_clean %>%
   summarise(
@@ -278,7 +278,7 @@ print(summary_indoors)
 
 Some cat spends 23 hours indoors which over 11 times more than cat with the least indoor hours. In average cats in this research spends around 12 hours indoors.
 
-Calculating the summary statistics for preys per month
+-- preys per month --
 ```
 summary_prey <- cats_reference_clean %>%
   summarise(
@@ -293,7 +293,7 @@ print(summary_prey)
 
 Cats that hunt in this research catches at least 1 prey and in average they catch around 5 preys per month. The most preys that a cat catch per month is 21 preys which is about 4 times more than the average.
 
-Calculating the summary statistics for deployed hours
+-- deployed hours --
 ```
 summary_deployed_hours <- cats_reference_clean %>%
   summarise(
