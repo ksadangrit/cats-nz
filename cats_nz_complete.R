@@ -233,14 +233,14 @@ cats_joined <- cats_reference_clean %>%
   full_join(y = total_events_cat, by=c("animal_id"))
 
 
-# Find average number of events a cat take in a day day separated by sex
-avg_day <- cats_joined %>% 
-  filter(!is.na(deploy_days)) %>%  
-  group_by(animal_sex) %>% 
+# Find average number of events a cat takes in a day separated by sex, excluding NA values in animal_sex
+avg_day <- cats_joined %>%
+  filter(!is.na(animal_sex)) %>%  # Filter out NA values in animal_sex
+  group_by(animal_sex) %>%
   summarise(
     total_number_sum = sum(total_number),
-    deploy_days_total = as.numeric(sum(deploy_days)),
-    avg_per_deploy_day = round(total_number_sum / deploy_days_total, 2)  # Round to 2 decimal places
+    deploy_days_total = sum(as.numeric(deploy_days), na.rm = TRUE),  # Convert deploy_days to numeric
+    avg_per_deploy_day = round(total_number_sum / deploy_days_total, 2)
   )
 
 
