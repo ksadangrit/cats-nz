@@ -402,7 +402,7 @@ There seems to be a correlation between the number of hours GPS deployed on cats
 When plotting a graph using the longitude and latitude data, it appears that most events (99.7% of the time) occured in the same area while 1155(0.3% of all events) happened in a further location. There are definitely some errors with the location data of the 1155 events as all cats in this project are from New Zealand but the outliers suggested that those events occured in a different continent.
 
 ## 5. Conclusions and recommendations
-Based on the data that we have available from 2015 to 2017, we found the following:
+Based on the data available from 2015 to 2017, I found the following:
 * Most cats hunt and they usually capture around 5 preys per month.
 * The cat ages range from under one year old to 16 years old.
 * Some cat has the GPS device on them for almost 83 days while some cat only has it with them for 13 hours.
