@@ -8,7 +8,7 @@ In this project, we will be looking at datasets of pet cats in New Zealand which
 
 I first came across this data through the [tidytuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-01-31/readme.md) post. As the datasets provided on the page is for the UK, I went to the original [website](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) to retrieve all the New Zealand datasets. The researchers originally collected data regarding pet cats from six different countries such as the UK, Australia and New Zealand to study the ecological importace of pets as predators. This project will focus solely on the New Zealand dataset. R will be utilised for data analysis and visualisation. 
 
-This project will focus only on the New Zealand cats data in which all the animals involved share the same taxon and does not contain any details of the preys that those cats hunt. The main objectives that I hope to find by the end of this project is whether there are any correlations between the number of events recorded for cats and other factors such as their ages, indoor hours, number of preys they catch and hours of GPS deployment. I also would like to explore if there are any trends in terms of the number of events and time measurements such as hour of the day, weekdays, months and year.
+This project will focus only on the New Zealand cats data in which all the animals involved share the same taxon and does not contain any details of the preys that those cats hunt. The main objectives that I hope to find by the end of this project are whether there are any correlations between the number of events recorded for cats and other factors such as their ages, indoor hours, number of preys they catch and hours of GPS deployment. I also would like to explore if there are any trends in terms of the number of events and time measurements such as hour of the day, weekdays, months and year.
 
 _Note: Click here to view the [license](https://creativecommons.org/publicdomain/zero/1.0/) of this data. These data are also described in the following [publication](https://doi.org/10.1111/acv.12563): Kays R, Dunn RR, Parsons AW, Mcdonald B, Perkins T, Powers S, Shell L, McDonald JL, Cole H, Kikillus H, Woods L, Tindle H, Roetman P (2020) The small home ranges and large local ecological impacts of pet cats. Animal Conservation._
 
@@ -316,14 +316,15 @@ cats_joined <- cats_reference_clean %>%
 
 ### Finding the average number of events separated by sex
 ```
-avg_day <- cats_joined %>% 
-  filter(!is.na(deploy_days)) %>%  
-  group_by(animal_sex) %>% 
+avg_day <- cats_joined %>%
+  filter(!is.na(animal_sex)) %>%  # Filter out NA values in animal_sex
+  group_by(animal_sex) %>%
   summarise(
     total_number_sum = sum(total_number),
-    deploy_days_total = as.numeric(sum(deploy_days)),
-    avg_per_deploy_day = round(total_number_sum / deploy_days_total, 2)  # Round to 2 decimal places
+    deploy_days_total = sum(as.numeric(deploy_days), na.rm = TRUE),  # Convert deploy_days to numeric
+    avg_per_deploy_day = round(total_number_sum / deploy_days_total, 2)
   )
+
 ```
 
 ## 4. Visualisations and findings 
