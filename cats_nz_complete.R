@@ -3,7 +3,6 @@ library(tidyverse)
 library(ggplot2)
 
 # Install janitor and hms packages then download the library. We also need dply and tidyr but they were already installed in my case.
-install.packages("here")
 install.packages("janitor")
 library(janitor)
 library(hms)
