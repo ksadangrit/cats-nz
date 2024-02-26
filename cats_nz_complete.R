@@ -1,9 +1,7 @@
-# Import tidyverse and ggplot2 since the packages were already installed
-library(tidyverse)
-library(ggplot2)
-
-# Install janitor and hms packages then download the library. We also need dply and tidyr but they were already installed in my case.
+# Install tidyverse and janitor packages then download the libraries. dply and tidyr packages will be installed as part of the tidyverse package.
+install.packages("tidyverse")
 install.packages("janitor")
+library(tidyverse)
 library(janitor)
 library(hms)
 
