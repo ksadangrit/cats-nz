@@ -14,8 +14,8 @@ _Note: Click here to view the [license](https://creativecommons.org/publicdomain
 
 
 ## My analytical workflow
-1. Importing and preparing data
-2. Cleaning the data
+1. Importing data
+2. Cleaning and Preparing the data
 3. Calculation and analysis 
 4. Visualisations and findings
 5. Conclusions and recommendations
@@ -74,7 +74,7 @@ For full definitions click [here](https://datarepository.movebank.org/server/api
 * `tag_id`: A unique identifier for the tag, provided by the data owner. If the data owner does not provide a tag ID, an internal Movebank tag identifier may sometimes be shown. example: 2342.
 * `timestamp`: The date and time corresponding to a sensor measurement or an estimate derived from sensor measurements. 
 
-## 2. Cleaning the data
+## 2. Cleaning and preparing the data
 We will start by cleaning the `cats_nz` dataset. We will drop the columns that are not needed and change `tag_local_identifier` and `individual_local_identifier` column names to match the same columns from the `cats_reference` dataset.
 ```
 cats_nz_clean <-cats_nz %>% 
