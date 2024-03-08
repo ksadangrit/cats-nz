@@ -20,7 +20,7 @@ _Note: Click here to view the [license](https://creativecommons.org/publicdomain
 4. Visualisations and findings
 5. Conclusions and recommendations
 
-## 1. Importing and preparing data
+## 1. Importing data
 Firstly, we will download the datasets from [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) and save them into my computer file. 
 
 Before we import the datasets into the RStudio, we will to ensure that all the neccesary packages are installed by running the following code.
