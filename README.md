@@ -4,7 +4,7 @@
 _Photo by Pixabay from [Pexels](https://www.pexels.com/photo/low-angle-view-of-cat-on-tree-257532/)_
 
 ## Introduction
-In this project, we will be looking at datasets of pet cats in New Zealand which had been collected from GPS sensors strapped by a number of voluntees on their pets to track the cat's number of activities. The datasets are from 2015 to 2017. Cat's characteristics such as sex, age and hunting habits are also provided in the datasets.  This data is published by [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47). 
+In this project, we will be looking at datasets of pet cats in New Zealand which had been collected from GPS sensors strapped by a number of volunteers on their pets to track the cat's number of activities. The datasets are from 2015 to 2017. Cat's characteristics such as sex, age and hunting habits are also provided in the datasets. This data is published by [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47).
 
 I first came across this data through the [tidytuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-01-31/readme.md) post. As the datasets provided on the page is for the UK, I went to the original [website](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) to retrieve all the New Zealand datasets. The researchers originally collected data regarding pet cats from six different countries such as the UK, Australia and New Zealand to study the ecological importace of pets as predators. This project will focus solely on the New Zealand dataset. R will be utilised for data analysis and visualisation. 
 
@@ -21,7 +21,7 @@ _Note: Click here to view the [license](https://creativecommons.org/publicdomain
 5. Conclusions and recommendations
 
 ## 1. Importing data
-Firstly, we will download the datasets from [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) and save them into my computer file. 
+Firstly, we will download the datasets from [Movebank](https://datarepository.movebank.org/entities/datapackage/75d6171c-d981-4bdf-bf23-bf2af17a7e47) and save them locally. 
 
 Before we import the datasets into the RStudio, we will to ensure that all the neccesary packages are installed by running the following code.
 ```
@@ -44,12 +44,12 @@ we will then import the csv files for the cats data into the RStudio, starting w
 cats_nz <- read_csv("/Users/yanhua1/Downloads/pet_cats_nz.csv") %>% 
   clean_names()
 ```
-Next, we will import the reference dataser with clean column names using the below code.
+Next, we will import the reference dataset with clean column names using the below code.
 ```
 cats_reference <- read_csv("/Users/yanhua1/Downloads/pet_cats_nz_reference_data.csv") %>% 
   clean_names()
 ```
-We will check out all the columns and the data using the `glimpse()` function and check whether all the event ids are unique and matches the number of roes using `length()`
+We will check out all the columns and the data using the `glimpse()` function and check whether all the event ids are unique and matches the number of rows using `length()`
 ```
 glimpse(cats_nz)
 glimpse(cats_reference)
@@ -57,7 +57,7 @@ length(unique(cats_nz$event_id))
 ```
 
 ### Data Dictionary 
-For full definitions click [here](https://datarepository.movebank.org/server/api/core/bitstreams/a4ef5439-621e-4c95-b4d6-b4f34fe85504/content)https://datarepository.movebank.org/server/api/core/bitstreams/a4ef5439-621e-4c95-b4d6-b4f34fe85504/content.
+For full definitions click [here](https://datarepository.movebank.org/server/api/core/bitstreams/a4ef5439-621e-4c95-b4d6-b4f34fe85504/content)https://datarepository.movebank.org/server/api/core/bitstreams/a4ef5439-621e-4c95-b4d6-b4f34fe85504/content).
 * `algorithm_marked_outlier`: Identifies events marked as outliers using a user-selected filter algorithm in Movebank. Outliers have the value TRUE.
 * `animal_comments`: Additional information about the animal that is not described by other reference data terms.
 * `animal_id`: An individual identifier for the animal, provided by the data owner. If the data owner does not provide an Animal ID, an internal Movebank animal identifier is sometimes shown. same as: individual local identifier
